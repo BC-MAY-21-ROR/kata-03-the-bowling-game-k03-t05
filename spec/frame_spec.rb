@@ -1,10 +1,30 @@
-require './frame'
+require_relative '../bowling_game/frame'
 
 RSpec.describe Frame do
-    let(:test_frame) {Frame.new}
-    context 'regresar el resultado del primer intento' do
-        it 'regresa el primer intento' do
-            expect(test_frame.first_roll_ball).not_to be_empty
-        end
+    before do
+        @frame = Frame.new
     end
+    it 'can do a strike' do
+        @frame.first_try = 10
+        expect(@frame.strike?).to eql true
+    end
+    it 'can do a spare' do
+        @frame.first_try = 2
+        @frame.second_try = 8
+        @frame.total_score
+        
+        expect(@frame.spare?).to eql true
+    end
+    it 'game total score is equal to 10 ' do
+        @frame.first_try = 2
+        @frame.second_try = 8
+        expect(@frame.total_score).to eql 10
+    end
+    it 'first roll ball' do
+        expect(@frame.first_roll_ball).to be_between(0, 10).inclusive
+    end
+    it 'second_roll_bal' do
+        expect(@frame.second_roll_ball).to be_between(0,10).inclusive
+    end
+
 end
